@@ -2,11 +2,12 @@ const searchBox = document.getElementById("search-user")
 
 searchBox.addEventListener("keyup", async evt => {
     let id = searchBox.value
-    let datos = await requestData(`https://reqres.in/api/users/${id}`)
-    let fullName = datos.first_name + " " + datos.last_name
+    let datos = await requestData(`http://newsapi.org/v2/everything?q=bitcoin&from=2020-10-15&sortBy=publishedAt&apiKey=0fcf4a03858f485eb1ce42351744d64c`)
+  //  let fullName = datos.first_name + " " + datos.last_name
+    let title = datos[0].title
 
     renderUserInfo({
-        fullName: fullName
+        fullName: title
     })
 })
 
@@ -26,6 +27,6 @@ const isAvaible = res => res.status == 200 ? res.json() : new Error("Failed to c
 const requestData = async apiURL => {
     const response = await fetch(apiURL)
     const json = await isAvaible(response)
-    const data = json.data
+    const data = json.articles
     return data
 }
